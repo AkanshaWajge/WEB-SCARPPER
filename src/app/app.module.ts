@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { ExtractorsComponent } from './extractors/extractors.component';
 import { SupportComponent } from './support/support.component';
 import { EditComponent } from './extractors/edit/edit.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { EditComponent } from './extractors/edit/edit.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
