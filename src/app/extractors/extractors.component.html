@@ -1,10 +1,10 @@
-<!-- <router-outlet></router-outlet> -->
 <div class="main">
   <div class="sidebar">
-    <app-list [extractorList]="extractorDatalist" (onSelectExtractor)="selectExtractorHandler($event)" (onAddExtractor)="addExtractorPopupHandler($event)"></app-list>
+    <app-list  [extractorList]="extractorDatalist" (onSelectExtractor)="selectExtractorHandler($event)" (onAddExtractor)="addExtractorPopupHandler($event)"></app-list>
   </div>
   <div class="content">
-    <app-details (callbackParent)="callbackFromDetailsHandler($event)" [selectedExtractor]="selectedExtractor"></app-details>
+    <app-details  *ngIf="!editMode" (callbackParent)="callbackFromDetailsHandler($event)" [selectedExtractor]="selectedExtractor"></app-details>
+    <app-edit *ngIf="editMode"></app-edit>
   </div>
   <div class="add-popup-container" *ngIf="addExtractorPopupFlag">
     <app-add-extractor (onCreateExtractor)="createExtractorHandler($event)"></app-add-extractor>

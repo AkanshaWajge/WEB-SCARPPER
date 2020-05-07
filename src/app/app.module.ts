@@ -14,6 +14,7 @@ import { WebpageComponent } from './extractors/edit/webpage/webpage.component';
 import { ListComponent } from './extractors/list/list.component';
 import { AddExtractorComponent } from './extractors/add-extractor/add-extractor.component';
 import { DetailsComponent } from './extractors/details/details.component';
+import { EditorComponent } from './extractors/edit/editor/editor.component';
 
 
 @NgModule({
@@ -23,17 +24,18 @@ import { DetailsComponent } from './extractors/details/details.component';
     ExtractorsComponent,
     SupportComponent,
     EditComponent,
-    WebpageComponent
+    WebpageComponent,
     ListComponent,
     AddExtractorComponent,
-    DetailsComponent
+    DetailsComponent,
+    EditorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
