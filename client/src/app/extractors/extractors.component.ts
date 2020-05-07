@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-extractors',
@@ -23,7 +24,7 @@ export class ExtractorsComponent implements OnInit {
   ];
   editMode = false;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
 
@@ -71,7 +72,12 @@ export class ExtractorsComponent implements OnInit {
     }
   }
 
-  runInputsHandler() { }
+  runInputsHandler() {
+    console.log("connect to server");
+    this.http.get<any>("http://localhost:3000/api").subscribe(res => {
+      console.log("response received",res);
+    }, error => console.log('oops', error));
+  }
 
   editExtractorHandler() {
     this.editMode = true;
