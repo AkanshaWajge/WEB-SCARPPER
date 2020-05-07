@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule }   from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,10 @@ import { SupportComponent } from './support/support.component';
 import { EditComponent } from './extractors/edit/edit.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ListComponent } from './extractors/list/list.component';
+import { AddExtractorComponent } from './extractors/add-extractor/add-extractor.component';
+import { DetailsComponent } from './extractors/details/details.component';
+
 
 @NgModule({
   declarations: [
@@ -16,13 +21,17 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     ExtractorsComponent,
     SupportComponent,
-    EditComponent
+    EditComponent,
+    ListComponent,
+    AddExtractorComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

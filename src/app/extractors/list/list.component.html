@@ -1,0 +1,33 @@
+<div class="main">
+  <div class="logo-container d-flex align-items-center">
+    <h1 class="clr1">Web Scrapper</h1>
+  </div>
+  <div class="list-container d-flex flex-column">
+    <div class="list-header d-flex align-items-center">
+      <div
+        class="d-flex pointer"
+        style="font-size: 28px;"
+        (click)="addExtractor()"
+      >
+        <i class="clr1 pointer material-icons">add_circle_outline</i>
+      </div>
+      <h2 class="clr1 list-header-title">Extractor List</h2>
+    </div>
+    <div class="list-data d-flex flex-column">
+      <div style="height: auto;">
+        <div
+          class="list-item d-flex align-items-center"
+          *ngFor="let obj of extractorList; let i = index"
+          (click)="selectExtractor(obj)"
+        >
+          <div style="min-width: 24px;">
+            <h3>{{ i + 1 }}.</h3>
+          </div>
+          <h3 title="{{ obj.title }}" class="list-header-title text-ellipse">
+            {{ obj.title }}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div *ngIf="selectedExtractor" class="main details-container">
+  <div class="details-header d-flex justify-content-between align-items-center">
+    <h3>{{ selectedExtractor.title }}</h3>
+    <div class="d-flex">
+      <button class="btn btn-danger" (click)="onRunInput()">RUN INPUTS</button>
+      <button class="btn btn-primary m-l-20" (click)="onEdit()">
+        EDIT
+      </button>
+      <button class="btn btn-primary m-l-20" (click)="onDelete()">
+        DELETE
+      </button>
+    </div>
+  </div>
+  <div class="details-content"></div>
+</div>
+<div
+  *ngIf="!selectedExtractor"
+  class="main details-container d-flex justify-content-center align-items-center"
+>
+  <h3>No Extractor Selected</h3>
+</div>
