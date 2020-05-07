@@ -9,6 +9,7 @@ import { SupportComponent } from './support/support.component';
 import { EditComponent } from './extractors/edit/edit.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { WebpageComponent } from './extractors/edit/webpage/webpage.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     ExtractorsComponent,
     SupportComponent,
-    EditComponent
+    EditComponent,
+    WebpageComponent
   ],
   imports: [
     BrowserModule,
