@@ -1,0 +1,14 @@
+<div class="main add-popup-container d-flex align-items-center justify-content-center">
+  <div class="add-popup-modal d-flex flex-column">
+    <div class="add-popup-heading d-flex align-items-center justify-content-between">
+      <h2>Add Extractor</h2>
+      <i class="material-icons pointer" (click)="onClosePopup()">clear</i>
+    </div>
+    <div class="add-popup-content d-flex align-items-center">
+      <input class="add-extractor-input" type="text" placeholder="Enter URL" [(ngModel)]="inputUrl"/>
+    </div>
+    <div class="add-popup-footer d-flex align-items-center justify-content-end">
+      <button type="button" class="btn btn-primary" (click)="onCreate()">CREATE</button>
+    </div>
+  </div>
+</div>
