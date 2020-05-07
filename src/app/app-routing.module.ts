@@ -8,7 +8,7 @@ import { EditComponent } from './extractors/edit/edit.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: ExtractorsComponent },
   { path: 'home', component: HomeComponent },
   {
     path: 'extractors', component: ExtractorsComponent,
