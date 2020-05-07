@@ -1,0 +1,25 @@
+<div class="editor">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <div class="form-group">
+      <label for="inputVariable">Input Variables</label>
+      <input 
+      type="text" 
+      formControlName="input"
+      class="form-control" 
+      id="inputVariable" 
+      aria-describedby="inputSchemaHelp" 
+      placeholder="{key_0 : value_0, key_1 : value_1}">
+      <small id="inputSchemaHelp" class="form-text text-muted">Enter input variables in json format</small>
+    </div>
+    <div class="form-group">
+      <label for="outputVariable">Output Schema</label>
+      <input type="text" formControlName="variable" class="form-control" id="outputVariable" aria-describedby="outputSchemaHelp" placeholder="{ column_name: {regex: value, selector: value} }">
+      <small id="outputSchemaHelp" class="form-text text-muted">Enter output schema in json format</small>
+    </div>
+    <div class="form-group">
+      <label class="form-check-label" for="codeSnippet">Code Snippet</label>
+      <textarea name="" formControlName="code_snippet" id="codeSnippet" cols="32" rows="10" class="form-text text-muted"></textarea>
+    </div>
+  </form>
+  
+</div>

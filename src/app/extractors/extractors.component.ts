@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-extractors',
@@ -8,7 +9,19 @@ import { Component, OnInit } from '@angular/core';
 export class ExtractorsComponent implements OnInit {
   selectedExtractor = undefined;
   addExtractorPopupFlag = false;
-  extractorDatalist: any = [];
+  extractorDatalist: any = [
+    {
+      id: JSON.stringify(Date.now()),
+      title: "amazon.com",
+      url: "https://www.amazon.com/find-your-store/b/?node=17608448011",
+    },
+    {
+      id: JSON.stringify(Date.now()),
+      title: "amazon.com",
+      url: "https://www.amazon.com/find-your-store/b/?node=17608448011",
+    }
+  ];
+  editMode = false;
 
   constructor() {}
 
@@ -58,10 +71,12 @@ export class ExtractorsComponent implements OnInit {
     }
   }
 
-  runInputsHandler() {}
+  runInputsHandler() { }
 
-  editExtractorHandler() {}
+  editExtractorHandler() {
+    this.editMode = true;
+  }
 
-  deleteExtractorHandler() {}
+  deleteExtractorHandler() { }
 
 }

@@ -1,41 +1,18 @@
 <div class="main-container">
-  <div class="header-wrapper">
-    ExtractorName
-    <span class="input-url">Input Url</span>
-    <span>
-      <button class="btn btn-primary">save</button>
-      <button class="btn btn-primary">close</button>
-    </span>
-  </div>
-  <div class="content-wrapper">
-    <div class="webpage-wrapper">
+    <div class="header-wrapper details-header d-flex justify-content-between align-items-center">
+      <span class="extractor-name">ExtractorName</span>
+      <span class="input-url">Input Url</span>
+      <span  class="d-flex">
+        <button class="btn btn-primary m-l-20">save</button>
+        <button class="btn btn-primary m-l-20">close</button>
+      </span>
+    </div>
+  <div class="row content-wrapper">
+    <div class="col-md-7 webpage-wrapper">
       <app-webpage></app-webpage>
     </div>
-    <div class="editor">
-      <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-        <div class="form-group">
-          <label for="inputVariable">Input Variables</label>
-          <input 
-          type="text" 
-          formControlName="input"
-          class="form-control" 
-          id="inputVariable" 
-          aria-describedby="inputSchemaHelp" 
-          placeholder="{key_0 : value_0, key_1 : value_1}">
-          <small id="inputSchemaHelp" class="form-text text-muted">Enter input variables in json format</small>
-        </div>
-        <div class="form-group">
-          <label for="outputVariable">Output Schema</label>
-          <input type="text" formControlName="variable" class="form-control" id="outputVariable" aria-describedby="outputSchemaHelp" placeholder="{ column_name: {regex: value, selector: value} }">
-          <small id="outputSchemaHelp" class="form-text text-muted">Enter output schema in json format</small>
-        </div>
-        <div class="form-group">
-          <label class="form-check-label" for="codeSnippet">Code Snippet</label>
-          <textarea name="" formControlName="code_snippet" id="codeSnippet" cols="32" rows="10" class="form-text text-muted"></textarea>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-      
+    <div class="col-md-5 editor-wrapper">
+      <app-editor></app-editor>
     </div>
   </div>
 </div>
