@@ -23,7 +23,7 @@ import { DetailsComponent } from './extractors/details/details.component';
     ExtractorsComponent,
     SupportComponent,
     EditComponent,
-    WebpageComponent
+    WebpageComponent,
     ListComponent,
     AddExtractorComponent,
     DetailsComponent
