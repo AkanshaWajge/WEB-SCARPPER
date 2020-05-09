@@ -10,23 +10,22 @@ import { HttpClient } from '@angular/common/http';
 export class ExtractorsComponent implements OnInit {
   selectedExtractor = undefined;
   addExtractorPopupFlag = false;
-  extractorDatalist: any = [
-    {
-      id: JSON.stringify(Date.now()),
-      title: "amazon.com",
-      url: "https://www.amazon.com/find-your-store/b/?node=17608448011",
-    },
-    {
-      id: JSON.stringify(Date.now()),
-      title: "amazon.com",
-      url: "https://www.amazon.com/find-your-store/b/?node=17608448011",
-    }
-  ];
+  extractorDatalist: any = [];
   editMode = false;
+  error: string
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.http.get('http://localhost:3000/api/list').subscribe((response) => {
+      if (response["success"] == "true") {
+        console.log(response);
+        this.extractorDatalist = response["data"];
+      } else {
+        this.error = response["message"]
+      }
+    }, error => console.log('oops', error));
+  }
 
   addExtractorPopupHandler(iFlag) {
     this.addExtractorPopupFlag = iFlag;
@@ -74,8 +73,8 @@ export class ExtractorsComponent implements OnInit {
 
   runInputsHandler() {
     console.log("connect to server");
-    this.http.get<any>("http://localhost:3000/api").subscribe(res => {
-      console.log("response received",res);
+    this.http.get<any>("http://localhost:3000/api/" + this.selectedExtractor.id).subscribe(res => {
+      console.log("response received", res);
     }, error => console.log('oops', error));
   }
 
