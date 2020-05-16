@@ -1,4 +1,4 @@
-import extractor from './db'
+var extractor = require('./db');
 
 const express = require('express'); //returns a function
 var cors = require('cors')
@@ -112,6 +112,28 @@ app.post("/api/add", (req, res) => {
     ext
   })
 })
+
+app.get("/runextractor", async (req, res, next) => {
+  try {
+    console.log("inside node api");
+
+    const url = req.query.url;
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    let data = await page.evaluate((runscript) => {
+      return new Function(runscript)();
+    },req.query.runscript);
+
+    console.log("data", data);
+    await browser.close();
+    res.send([data]);
+  } catch (err) {
+    console.error(err);
+  }
+});
 
 app.listen(3000, () => {
   console.log("server is listing on port 3000");
