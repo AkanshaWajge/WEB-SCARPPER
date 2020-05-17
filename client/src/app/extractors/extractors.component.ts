@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+import { ExtractorService } from './extarctors.service';
+import { Extractor } from './extractors.module';
+
 @Component({
   selector: 'app-extractors',
   templateUrl: './extractors.component.html',
@@ -10,21 +13,14 @@ import { HttpClient } from '@angular/common/http';
 export class ExtractorsComponent implements OnInit {
   selectedExtractor = undefined;
   addExtractorPopupFlag = false;
-  extractorDatalist: any = [];
+  extractorDatalist: Extractor[] = [];
   editMode = false;
-  error: string
+  error: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private service: ExtractorService) { }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:3000/api/list').subscribe((response) => {
-      if (response["success"] == "true") {
-        console.log(response);
-        this.extractorDatalist = response["data"];
-      } else {
-        this.error = response["message"]
-      }
-    }, error => console.log('oops', error));
+    this.fetchExtractor();
   }
 
   addExtractorPopupHandler(iFlag) {
@@ -38,14 +34,16 @@ export class ExtractorsComponent implements OnInit {
 
   createExtractorHandler(iInputValue) {
     if (iInputValue) {
-      var arr = iInputValue.split('/');
-      var result = arr[2];
+      const arr = iInputValue.split('/');
+      const result = arr[2];
 
-      this.extractorDatalist.push({
-        id: JSON.stringify(Date.now()),
+      this.service.postExtractor({
+        id: Date.now() + '',
         title: result,
         url: iInputValue,
       });
+
+      this.fetchExtractor();
 
       console.log('this.extractorDatalist', this.extractorDatalist);
     }
@@ -72,9 +70,9 @@ export class ExtractorsComponent implements OnInit {
   }
 
   runInputsHandler() {
-    console.log("connect to server");
-    this.http.get<any>("http://localhost:3000/api/" + this.selectedExtractor.id).subscribe(res => {
-      console.log("response received", res);
+    console.log('connect to server');
+    this.service.fetchExtractor(this.selectedExtractor.id).subscribe(res => {
+      console.log('response received', res);
     }, error => console.log('oops', error));
   }
 
@@ -82,6 +80,17 @@ export class ExtractorsComponent implements OnInit {
     this.editMode = true;
   }
 
-  deleteExtractorHandler() { }
+  deleteExtractorHandler() {
+    this.service.deleteExtractor(this.selectedExtractor.id).subscribe((response) => {
+      console.log(response);
+    });
+    this.fetchExtractor();
+  }
 
+  fetchExtractor() {
+    this.service.fetchExtractorList().subscribe((response) => {
+      console.log(response);
+      this.extractorDatalist = response;
+    }, error => console.log('oops', error));
+  }
 }

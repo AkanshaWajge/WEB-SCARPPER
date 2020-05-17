@@ -1,13 +1,13 @@
 let extractors = [
   {
-    "id": 1,
+    "id": Date.now()+'',
     "title": "mygov.com",
     "url": "https://www.mygov.in/covid-19"
   },
   {
-    "id": 2,
-    "title": "amazon.com",
-    "url": "https://www.amazon.com/find-your-store/b/?node=17608448011"
+    "id": Date.now()+1+'',
+    "title": "imdb.com",
+    "url": "https://www.imdb.com/title/tt0068646/"
   }
 ]
 export default extractors
