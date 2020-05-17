@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { ExcelService } from 'src/app/services/excel.service';
 
 @Component({
   selector: 'app-details',
@@ -10,7 +11,7 @@ export class DetailsComponent implements OnInit {
   @Input() selectedExtractor: any;
   @Output() callbackParent = new EventEmitter<any>();
 
-  constructor() {}
+  constructor(private excelService: ExcelService) {}
 
   ngOnInit(): void {}
 
@@ -24,6 +25,12 @@ export class DetailsComponent implements OnInit {
 
   onDelete() {
     this.callbackParent.emit('delete');
+  }
+
+  onDownload(iObject){
+    console.log("download excel sheet");
+    this.excelService.exportAsExcelFile(iObject.responseData, 'sample');
+
   }
 
 }

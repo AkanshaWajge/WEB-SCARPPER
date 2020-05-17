@@ -11,7 +11,34 @@
       </button>
     </div>
   </div>
-  <div class="details-content"></div>
+  <div class="details-content">
+    <div style="height: auto;width:100%">
+      <div *ngFor="let obj of selectedExtractor.runInputsData" class="card d-flex align-items-center" [ngStyle]="{'border-left-color': obj.status == -1 ? '#FFC007' : obj.status ? '#01c851' : '#ff3548'}">
+        <div *ngIf="obj.status === -1" class="d-flex align-items-center" style="margin-right: 15px;">
+          <img  src="../../../assets/images/pending.gif" height="35"/>
+        </div>
+        <div class="card-item">
+          <h5 style="margin-bottom: 10px;font-size: 14px;color:#0d014799">Date & Time</h5>
+          <h5 style="font-size: 18px;font-weight: 500;" >{{obj.time}}</h5>
+        </div>
+        <div class="card-item">
+          <h5 style="margin-bottom: 10px;font-size: 14px;color:#0d014799">Duration</h5>
+          <h5 style="font-size: 18px;font-weight: 500;">{{obj.duration}}</h5>
+        </div>
+        <div class="card-item">
+          <h5 style="margin-bottom: 10px;font-size: 14px;color:#0d014799">Staus</h5>
+          <div class="d-flex align-items-center">
+            <h5 style="font-size: 18px;font-weight: 500;" [ngStyle]="{'color': obj.status == -1 ? '#FFC007' : obj.status ? '#01c851' : '#ff3548'}">{{obj.status == -1 ? 'Pending' : obj.status ? 'Success' : 'Fail'}}</h5>
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="d-flex" (click)="onDownload(obj)">
+            <i class="pointer material-icons">file_download</i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div
   *ngIf="!selectedExtractor"

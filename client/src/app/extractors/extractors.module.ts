@@ -5,4 +5,13 @@ export interface Extractor {
   codeSnippet?: string;
   inputSchema?: string;
   outputSchema?: string;
+  responseData?: [];
+  runInputsData?: [{
+    id: string;
+    time: string;
+    status: string;
+    responseData: any[];
+  }];
+  time?: string;
+  status?: string;
 }

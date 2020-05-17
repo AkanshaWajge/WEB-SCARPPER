@@ -1,4 +1,6 @@
 //import extractor from './db'
+//var extractor = require('./db');
+
 const express = require('express'); //returns a function
 var cors = require('cors')
 const app = express();
@@ -27,12 +29,22 @@ app.get("", (req, res, next) => {
     {
       "id": 0,
       "title": "mygov.com",
-      "url": "https://www.mygov.in/covid-19"
+      "url": "https://www.mygov.in/covid-19",
+      runScript:
+        "let element = document.querySelector('div.title_wrapper > h1');let title = element.innerText; return {title}",
+      runInputsData: [
+
+      ]
     },
     {
       "id": 1,
       "title": "imdb.com",
-      "url": "https://www.imdb.com/title/tt0068646/"
+      "url": "https://www.imdb.com/title/tt0068646/",
+      runScript:
+        "let element = document.querySelector('div.title_wrapper > h1');let title = element.innerText; return {title}",
+      runInputsData: [
+  
+      ]
     }
   ]);
 });
@@ -177,7 +189,7 @@ app.delete('/api/delete/:id', function (req, res) {
     extractor.remove();
     return res.status(200).send({
       success: 'true',
-      message: 'Extractor deleted successfully - '+id
+      message: 'Extractor deleted successfully - ' + id
     });
   } catch (error) {
     console.log(error);
@@ -188,6 +200,28 @@ app.delete('/api/delete/:id', function (req, res) {
   }
   console.log("HTTP DELETE Request");
   //todo
+});
+
+app.get("/runextractor", async (req, res, next) => {
+  try {
+    console.log("inside node api");
+
+    const url = req.query.url;
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    let data = await page.evaluate((runscript) => {
+      return new Function(runscript)();
+    }, req.query.runscript);
+
+    console.log("data", data);
+    await browser.close();
+    res.send([data]);
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 app.listen(3000, () => {
