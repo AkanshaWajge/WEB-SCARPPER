@@ -31,10 +31,22 @@ app.get("", (req, res, next) => {
       "title": "mygov.com",
       "url": "https://www.mygov.in/covid-19",
       runScript:
-        "let element = document.querySelector('div.title_wrapper > h1');let title = element.innerText; return {title}",
-      runInputsData: [
-
-      ]
+        `const rows = document.querySelectorAll('div.views-row'); 
+        console.log(typeof (rows));
+        let result = [];
+        for (var i=0; i<rows.length; i++) {
+          console.log("i",i);
+          const properties = {}; 
+          const stateName = rows[i].querySelector('span.st_name'); 
+          const stateCount = rows[i].querySelector('span.st_number'); 
+          properties.state_name = stateName.innerText; 
+          properties.state_count = stateCount.innerText; result.push(properties);
+          console.log("End i",i); 
+        }
+        console.log("Result",result);
+        return result;
+        `,
+      runInputsData: []
     },
     {
       "id": 1,
@@ -42,9 +54,7 @@ app.get("", (req, res, next) => {
       "url": "https://www.imdb.com/title/tt0068646/",
       runScript:
         "let element = document.querySelector('div.title_wrapper > h1');let title = element.innerText; return {title}",
-      runInputsData: [
-  
-      ]
+      runInputsData: []
     }
   ]);
 });
@@ -68,6 +78,33 @@ app.get("/api/list", (req, res, next) => {
     });
 });
 
+app.get("/runextractor", async (req, res, next) => {
+  try {
+    console.log("inside node api", req.query.runscript);
+
+    const url = req.query.url;
+
+    const browser = await puppeteer.launch({
+      headless: false,
+      defaultViewport: null
+    });
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    let data = await page.evaluate((runscript) => {
+      console.log("Inside run", runscript);
+      return new Function(runscript)();
+
+    }, req.query.runscript);
+
+    console.log("data", data);
+    await browser.close();
+    res.send([data]);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 //get unique extractor
 app.get("/api/:id", (req, res, next) => {
   console.log("inside get unique extractor api", req);
@@ -79,40 +116,20 @@ app.get("/api/:id", (req, res, next) => {
     function (snapshot) {
       console.log("snap val", snapshot.val());
       extractor = snapshot.val();
-      console.log("Extractor : ", extractor)
-      //visit the url and process the page
-      async function run(url) {
+
+      async function run(extractor) {
         let result = []
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.goto(url);
-        console.log("Inside run ");
-        if (url == "https://www.mygov.in/covid-19") {
-
-          await page.waitFor('div.views-row');
-
-          result = await page.$$eval('div.views-row', rows => {
-            return rows.map(row => {
-              const properties = {};
-              const stateName = row.querySelector('span.st_name');
-              const stateCount = row.querySelector('span.st_number');
-              properties.state_name = stateName.innerText;
-              properties.state_count = stateCount.innerText;
-              return properties;
-            })
-          })
-
-        } else if (url == "https://www.imdb.com/title/tt0068646/") {
-          data = await page.evaluate(() => {
-            let title = document.querySelector('div.title_wrapper > h1').innerText;
-            return { title };
-          })
-        }
-        await browser.close();
-        console.log('data', result);
-        return result;
+        await page.goto(extractor.url);
+        let data = await page.evaluate((runscript) => {
+          console.log("Inside run", runscript);
+          return new Function(runscript)();
+        }, extractor.runScript);
+        console.log("data", data);
+        return data;
       }
-      run(extractor.url).then((result) => {
+      run(extractor).then((result) => {
         res.send({
           success: 'true',
           message: 'Extractor-' + id + ' fetched ' + 'successfully',
@@ -202,27 +219,7 @@ app.delete('/api/delete/:id', function (req, res) {
   //todo
 });
 
-app.get("/runextractor", async (req, res, next) => {
-  try {
-    console.log("inside node api");
 
-    const url = req.query.url;
-
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url);
-
-    let data = await page.evaluate((runscript) => {
-      return new Function(runscript)();
-    }, req.query.runscript);
-
-    console.log("data", data);
-    await browser.close();
-    res.send([data]);
-  } catch (err) {
-    console.error(err);
-  }
-});
 
 app.listen(3000, () => {
   console.log("server is listing on port 3000");

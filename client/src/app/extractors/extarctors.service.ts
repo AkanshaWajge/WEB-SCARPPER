@@ -24,7 +24,7 @@ export class ExtractorService {
       const arr = [];
       console.log('response', response);
       const keys = Object.keys(response.data);
-      for (let i of keys) {
+      for (const i of keys) {
         console.log(i);
         if (response.data.hasOwnProperty(i)) {
           arr.push(response.data[i]);

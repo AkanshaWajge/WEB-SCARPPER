@@ -71,16 +71,7 @@ export class ExtractorsComponent implements OnInit {
   }
 
   runInputsHandler() {
-    // console.log('connect to server');
-    // this.service.fetchExtractor(this.selectedExtractor.id).subscribe(res => {
-    //   console.log('response received', res);
-    // }, error => console.log('oops', error));
-
-
-    console.log('coonect to server');
-    let params = new HttpParams();
-    params = params.append('url', this.selectedExtractor.url);
-    params = params.append('runscript', this.selectedExtractor.runScript);
+    console.log('connect to server');
     const runInputObject = {
       id: 'ri' + Date.now(),
       time: new Date().toLocaleString(),
@@ -89,14 +80,14 @@ export class ExtractorsComponent implements OnInit {
     };
     const selectedExtractorIndex = this.extractorDatalist.findIndex(obj => this.selectedExtractor.id === obj.id);
     this.extractorDatalist[selectedExtractorIndex].runInputsData = [runInputObject];
-    this.selectedExtractor = this.extractorDatalist[selectedExtractorIndex];
     const timeStart = Date.now();
-    this.http.get<any>('http://localhost:3000/runextractor', { params: params }).subscribe(data => {
-      console.log('response received', data);
+
+    this.service.fetchExtractor(this.selectedExtractor.id).subscribe(res => {
+      console.log('response received', res);
       const timeEnd = Date.now();
       this.selectedExtractor.runInputsData[0].duration = this.msToTime(timeEnd - timeStart);
       this.selectedExtractor.runInputsData[0].status = 1;
-      this.selectedExtractor.runInputsData[0].responseData = data;
+      this.selectedExtractor.runInputsData[0].responseData = res;
       this.extractorDatalist[selectedExtractorIndex] = this.selectedExtractor;
     }, error => {
       console.log('oops', error);
